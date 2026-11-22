@@ -10,6 +10,8 @@ var HEADER = MAGIC.length + 1 + 4;
 var SIGNATURE_BYTES = 64;
 var MAX_PAYLOAD = 16 * 1024;
 var MAX_YEARS = 100;
+var MAX_TRIAL_DAYS = 30;
+var DAY_MS = 864e5;
 var MAX_NAME = 120;
 var ALL_SERVICES = [
   "reminder",
@@ -57,6 +59,9 @@ function buildPayload(input) {
   if (name.length > MAX_NAME) throw new LicenseError("damaged", "The name is too long.");
   if (!Number.isInteger(input.years) || input.years < 1 || input.years > MAX_YEARS)
     throw new LicenseError("damaged", `Choose between 1 and ${MAX_YEARS} years.`);
+  const trial = input.trialDays;
+  if (trial !== void 0 && (!Number.isInteger(trial) || trial < 1 || trial > MAX_TRIAL_DAYS))
+    throw new LicenseError("damaged", `A trial lasts between 1 and ${MAX_TRIAL_DAYS} days.`);
   const rawServices = input.services ?? ALL_SERVICES;
   const services = Array.from(new Set(rawServices)).filter(
     (s) => ALL_SERVICES.includes(s)
@@ -69,10 +74,11 @@ function buildPayload(input) {
     product: PRODUCT_ID,
     id: input.id,
     name,
-    years: input.years,
+    years: trial !== void 0 ? 1 : input.years,
+    ...trial !== void 0 ? { trialDays: trial } : {},
     services,
     issued: input.now.toISOString(),
-    expires: addYears(input.now, input.years).toISOString(),
+    expires: trial !== void 0 ? new Date(input.now.getTime() + trial * DAY_MS).toISOString() : addYears(input.now, input.years).toISOString(),
     issuer: input.issuer,
     ip: input.ip
   };
@@ -89,13 +95,10 @@ function parsePayload(value) {
       typeof p.v === "number" && p.v < FORMAT_VERSION ? "Old v1 licenses are no longer supported. Please obtain a modern v2 license." : "This license was made for a newer Smaran. Update Smaran, then import it again."
     );
   }
-  const ok = typeof p.product === "string" && typeof p.id === "string" && p.id.length > 0 && p.id.length <= 64 && typeof p.name === "string" && p.name.length > 0 && p.name.length <= MAX_NAME && typeof p.years === "number" && Number.isInteger(p.years) && p.years >= 1 && p.years <= MAX_YEARS && Array.isArray(p.services) && p.services.length > 0 && p.services.every((s) => ALL_SERVICES.includes(s)) && isIso(p.issued) && isIso(p.expires) && typeof p.issuer === "string";
+  const ok = typeof p.product === "string" && typeof p.id === "string" && p.id.length > 0 && p.id.length <= 64 && typeof p.name === "string" && p.name.length > 0 && p.name.length <= MAX_NAME && typeof p.years === "number" && Number.isInteger(p.years) && p.years >= 1 && p.years <= MAX_YEARS && Array.isArray(p.services) && p.services.length > 0 && p.services.every((s) => ALL_SERVICES.includes(s)) && isIso(p.issued) && isIso(p.expires) && (p.trialDays === void 0 || typeof p.trialDays === "number" && Number.isInteger(p.trialDays) && p.trialDays >= 1 && p.trialDays <= MAX_TRIAL_DAYS) && typeof p.issuer === "string";
   if (!ok) throw new LicenseError("damaged", "This license isn\u2019t valid.");
   if (!isIp(p.ip))
-    throw new LicenseError(
-      "damaged",
-      "This license isn\u2019t valid any more. Ask for a new license."
-    );
+    throw new LicenseError("damaged", "This license isn\u2019t valid any more. Ask for a new license.");
   return p;
 }
 function checkPayload(payload, now) {
@@ -247,7 +250,8 @@ function crc32(bytes) {
   return (c ^ 4294967295) >>> 0;
 }
 function decodePng(bytes, inflate) {
-  if (!isPng(bytes)) throw new LicenseError("no-license", "This image doesn\u2019t contain a Smaran license.");
+  if (!isPng(bytes))
+    throw new LicenseError("no-license", "This image doesn\u2019t contain a Smaran license.");
   const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
   let pos = 8;
   let width = 0;
@@ -264,10 +268,7 @@ function decodePng(bytes, inflate) {
       const depth = data[8];
       colorType = data[11] === 0 ? data[9] ?? -1 : -2;
       if (depth !== 8 || colorType !== 2 && colorType !== 6)
-        throw new LicenseError(
-          "unsupported",
-          "This license isn\u2019t valid."
-        );
+        throw new LicenseError("unsupported", "This license isn\u2019t valid.");
     } else if (type === "IDAT") idat.push(data);
     else if (type === "IEND") break;
     pos += 12 + len;
@@ -410,6 +411,7 @@ export {
   FORMAT_VERSION,
   LicenseError,
   MAX_NAME,
+  MAX_TRIAL_DAYS,
   MAX_YEARS,
   PRODUCT_ID,
   PRODUCT_NAME,

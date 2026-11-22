@@ -249,7 +249,7 @@ export function drawCard(ctx, p, isVerified = false) {
   ctx.fillText(displayName, 96, 400);
 
   const rows = [
-    ['Duration', `${p.years} year${p.years === 1 ? '' : 's'}`],
+    ['Duration', durationLabel(p)],
     ['Issued', longDate(p.issued)],
     ['Expires', longDate(p.expires)],
   ];
@@ -331,6 +331,17 @@ function getSelectedServices() {
   return services;
 }
 
+/** "2 years" or, for a trial, "Trial · 14 days". */
+function durationLabel(p) {
+  if (p.trialDays) return `Trial · ${p.trialDays} day${p.trialDays === 1 ? '' : 's'}`;
+  return `${p.years} year${p.years === 1 ? '' : 's'}`;
+}
+
+function getTrialDays() {
+  const n = Number($('trial-days')?.value);
+  return Number.isInteger(n) && n > 0 ? n : 0;
+}
+
 function updateLivePreview() {
   if (isVerifiedSigned) return; // don't override signed card unless inputs change
   const canvas = $('canvas');
@@ -350,11 +361,14 @@ function updateLivePreview() {
 
   const now = new Date();
   const expires = new Date(now);
-  expires.setFullYear(expires.getFullYear() + years);
+  const trialDays = getTrialDays();
+  if (trialDays) expires.setTime(now.getTime() + trialDays * 86400000);
+  else expires.setFullYear(expires.getFullYear() + years);
 
   const previewPayload = {
     name,
-    years,
+    years: trialDays ? 1 : years,
+    ...(trialDays ? { trialDays } : {}),
     services,
     id: 'PREVIEW-NOT-YET-SIGNED',
     issued: now.toISOString(),
@@ -373,7 +387,7 @@ function updateLivePreview() {
     for (const [k, v] of [
       ['Licensee', previewPayload.name],
       ['Services', services.length ? services.map((s) => SERVICE_NAMES[s] || s).join(', ') : 'None (All Locked - Select services to activate)'],
-      ['Duration', `${previewPayload.years} year(s)`],
+      ['Duration', durationLabel(previewPayload)],
       ['Valid Until', longDate(previewPayload.expires)],
       ['Status', 'Previewing (Click Create & Sign below to generate)'],
     ]) {
@@ -390,7 +404,16 @@ function updateLivePreview() {
 document.querySelectorAll('.preset-btn').forEach((btn) => {
   btn.addEventListener('click', () => {
     const val = btn.dataset.years;
-    if (val) {
+    const trial = btn.dataset.trial;
+    if (trial) {
+      if ($('trial-days')) $('trial-days').value = trial;
+      document.querySelectorAll('.preset-btn').forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+      isVerifiedSigned = false;
+      resetVerifiedUI();
+      updateLivePreview();
+    } else if (val) {
+      if ($('trial-days')) $('trial-days').value = '0';
       const yearsInput = $('years');
       if (yearsInput) yearsInput.value = val;
       document.querySelectorAll('.preset-btn').forEach((b) => b.classList.remove('active'));
@@ -405,6 +428,7 @@ document.querySelectorAll('.preset-btn').forEach((btn) => {
 const yearsInput = $('years');
 if (yearsInput) {
   yearsInput.addEventListener('input', () => {
+    if ($('trial-days')) $('trial-days').value = '0';
     const val = yearsInput.value;
     document.querySelectorAll('.preset-btn').forEach((b) => {
       b.classList.toggle('active', b.dataset.years === val);
@@ -532,6 +556,7 @@ form?.addEventListener('submit', async (event) => {
   try {
     const name = $('name')?.value.trim() || 'Smaran';
     const years = Number($('years').value);
+    const trialDays = getTrialDays();
     const services = getSelectedServices();
 
     if (services.length === 0) {
@@ -548,6 +573,7 @@ form?.addEventListener('submit', async (event) => {
     buildPayload({
       name,
       years,
+      ...(trialDays ? { trialDays } : {}),
       services,
       id: 'check',
       now: new Date(),
@@ -564,6 +590,7 @@ form?.addEventListener('submit', async (event) => {
     const payload = buildPayload({
       name,
       years,
+      ...(trialDays ? { trialDays } : {}),
       services,
       id: crypto.randomUUID(),
       now: new Date(),
@@ -631,7 +658,7 @@ form?.addEventListener('submit', async (event) => {
         ['License ID', payload.id],
         ['Product', payload.product],
         ['Services', (payload.services || []).map((s) => SERVICE_NAMES[s] || s).join(', ')],
-        ['Duration', `${payload.years} year(s)`],
+        ['Duration', durationLabel(payload)],
         ['Issued On', longDate(payload.issued)],
         ['Valid Until', longDate(payload.expires)],
         ['Issuer IP', payload.ip ?? 'None'],
