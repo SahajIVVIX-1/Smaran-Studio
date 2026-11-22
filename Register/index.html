@@ -1,0 +1,454 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Smaran: Register a License</title>
+    <link rel="icon" type="image/png" href="../icon.png" />
+    <link
+      rel="preload"
+      href="../fonts/source-serif-4-latin-wght-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="register.css" />
+    <script>
+      try {
+        const saved = localStorage.getItem('smaran-theme');
+        if (saved === 'light' || saved === 'dark') document.documentElement.dataset.theme = saved;
+      } catch {}
+    </script>
+  </head>
+  <body>
+    <header class="top">
+      <div class="wrap">
+        <a class="brand" href="../" aria-label="Smaran home">
+          <svg data-dots="smark,dance" data-hold="4" width="30" height="30"></svg>
+          <em>Smaran</em>
+        </a>
+        <div class="crumb">
+          <a href="../">Home</a>
+          <span class="sep">/</span>
+          <span class="active">Register License</span>
+        </div>
+        <div style="margin-left: auto; display: flex; align-items: center; gap: 14px;">
+          <a href="../" style="font-family: var(--font-sans); font-size: 13.5px; color: var(--muted); text-decoration: none;">← Back to Home</a>
+          <button class="theme-toggle" type="button" aria-label="Switch between light and dark">
+            <svg
+              class="moon"
+              width="17"
+              height="17"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              aria-hidden="true"
+            >
+              <path d="M21 13A9 9 0 1 1 11 3a7 7 0 0 0 10 10z" />
+            </svg>
+            <svg
+              class="sun"
+              width="17"
+              height="17"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              aria-hidden="true"
+            >
+              <circle cx="12" cy="12" r="4" />
+              <path
+                d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <!-- Two-Column Interactive Portal -->
+      <div class="reg-container">
+        <!-- Left Column: Form -->
+        <section class="portal-form-col">
+          <div class="portal-head">
+            <span class="eyebrow">Cryptographic License Portal</span>
+            <h1>Register a <em>License</em></h1>
+            <p class="intro">
+              Generate an authentic, offline-verifiable license card for Smaran. Built with 256-bit Ed25519 digital signatures and steganographic pixel embedding.
+            </p>
+          </div>
+
+          <form id="form" class="panel form-panel" novalidate>
+            <label class="field">
+              <span class="field-label">
+                <span>Licensee Name</span>
+                <span class="field-badge">Required</span>
+              </span>
+              <input
+                id="name"
+                name="name"
+                type="text"
+                maxlength="120"
+                autocomplete="off"
+                required
+                placeholder="Smaran"
+                value="Smaran"
+              />
+            </label>
+
+            <div class="field">
+              <span class="field-label">
+                <span>Duration</span>
+                <span class="field-badge">1 to 100 Years</span>
+              </span>
+              <div class="preset-chips">
+                <button type="button" class="preset-btn active" data-years="1">1 Year</button>
+                <button type="button" class="preset-btn" data-years="2">2 Years</button>
+                <button type="button" class="preset-btn" data-years="5">5 Years</button>
+                <button type="button" class="preset-btn" data-years="100">Lifetime (100y)</button>
+              </div>
+              <div class="years-input-wrap">
+                <input id="years" name="years" type="number" min="1" max="100" value="1" required />
+                <span class="unit">year(s) validity</span>
+              </div>
+            </div>
+
+            <div class="field">
+              <div class="field-label">
+                <span>Authorized Services</span>
+                <div class="preset-links-row">
+                  <button type="button" class="field-link-btn" data-preset="all">Full Suite (All 4)</button>
+                  <span class="sep-dot">·</span>
+                  <button type="button" class="field-link-btn" data-preset="remote">Remote Hub & LAN</button>
+                  <span class="sep-dot">·</span>
+                  <button type="button" class="field-link-btn" data-preset="productivity">Productivity</button>
+                </div>
+              </div>
+              <div class="services-selector">
+                <label class="svc-option">
+                  <input type="checkbox" id="svc-reminder" value="reminder" />
+                  <span class="svc-custom-box"></span>
+                  <span class="svc-label">
+                    <strong>Reminders</strong>
+                    <small>Timed alerts, repeating schedules & quiet hours</small>
+                  </span>
+                </label>
+                <label class="svc-option">
+                  <input type="checkbox" id="svc-automation" value="automation" />
+                  <span class="svc-custom-box"></span>
+                  <span class="svc-label">
+                    <strong>Automations</strong>
+                    <small>System routines, sleep/shutdown, script & link execution</small>
+                  </span>
+                </label>
+                <label class="svc-option">
+                  <input type="checkbox" id="svc-fileserver" value="fileserver" />
+                  <span class="svc-custom-box"></span>
+                  <span class="svc-label">
+                    <strong>File Server</strong>
+                    <small>Local LAN file sharing, WebDAV & browser dashboard</small>
+                  </span>
+                </label>
+                <label class="svc-option">
+                  <input type="checkbox" id="svc-remotehub" value="remotehub" />
+                  <span class="svc-custom-box"></span>
+                  <span class="svc-label">
+                    <strong>Remote Hub</strong>
+                    <small>Ultra-low latency wireless screen & audio streaming, SRT</small>
+                  </span>
+                </label>
+              </div>
+            </div>
+
+            <label class="field">
+              <span class="field-label">
+                <span>Signing Passphrase</span>
+                <span class="field-badge">Required</span>
+              </span>
+              <div class="pass-input-wrap">
+                <input
+                  id="pass"
+                  type="password"
+                  placeholder="Enter passphrase"
+                  autocomplete="current-password"
+                  spellcheck="false"
+                  required
+                />
+                <button
+                  type="button"
+                  id="toggle-pass"
+                  class="toggle-pass-btn"
+                  title="Toggle passphrase visibility"
+                  aria-label="Show passphrase"
+                >
+                  <svg class="eye-open" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                    <circle cx="12" cy="12" r="3" />
+                  </svg>
+                  <svg class="eye-closed" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
+                    <line x1="1" y1="1" x2="23" y2="23" />
+                  </svg>
+                </button>
+              </div>
+              <p class="field-hint">
+                Enter the cryptographic passphrase to authorize and sign licenses.
+              </p>
+            </label>
+
+            <details class="field alt-key">
+              <summary>Advanced: Use custom signing key (.json) instead</summary>
+              <input id="key" type="file" accept=".json,application/json" style="margin-top: 6px;" />
+            </details>
+
+            <div class="ip-status-card" id="ipcard">
+              <div class="ip-indicator">
+                <span class="pulse-dot" id="ipdot"></span>
+              </div>
+              <div class="ip-text">
+                <span id="ipnote">Looking up your public IP address…</span>
+                <small>Embedded in the cryptographic payload for provenance and offline verification.</small>
+              </div>
+            </div>
+
+            <div class="actions">
+              <button class="btn btn-primary make-btn" type="submit" id="make">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                </svg>
+                Create & Sign License Card
+              </button>
+            </div>
+            <p id="message" class="message" role="status" aria-live="polite"></p>
+          </form>
+        </section>
+
+        <!-- Right Column: Live Interactive Card Station -->
+        <section class="portal-preview-col">
+          <div class="panel live-preview-panel">
+            <div class="preview-header">
+              <span id="status-tag" class="result-tag preview-mode">
+                <span class="status-indicator-dot"></span>
+                <span id="status-tag-text">Dynamic Live Preview</span>
+              </span>
+              <span id="service-count-tag" class="service-count-tag">
+                4 / 4 Services Active
+              </span>
+            </div>
+
+            <div class="preview-container">
+              <canvas id="canvas" width="1200" height="750" class="live-card-canvas"></canvas>
+              <img id="preview" alt="Generated Smaran License" style="display: none;" />
+            </div>
+
+            <div class="result-actions" style="margin-top: 18px;">
+              <a class="btn btn-primary" id="png" download style="display: none;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 4v11M7 10l5 5 5-5M5 20h14" />
+                </svg>
+                Download License (.png)
+              </a>
+              <button type="button" class="btn btn-secondary" id="copy-id" style="display: none;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                </svg>
+                Copy License ID
+              </button>
+              <div id="pre-sign-prompt" class="pre-sign-prompt">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                <span>Live preview updates as you type. Click <strong>Create & Sign License Card</strong> to generate download.</span>
+              </div>
+            </div>
+
+            <dl id="details" class="details-grid" style="margin-top: 18px;"></dl>
+
+            <div class="activation-guide" style="margin-top: 18px;">
+              <h4>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                How to activate in Smaran:
+              </h4>
+              <ol>
+                <li>Click <strong>Create & Sign License Card</strong> on the left, then download your <code>.png</code>.</li>
+                <li>In Smaran on your PC, open <strong>Settings → License</strong>.</li>
+                <li>Click <strong>Import License</strong> and pick your downloaded image card. Pro features activate immediately!</li>
+              </ol>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Feature Matrix Section (Zero Empty Space) -->
+      <section class="portal-extra-section">
+        <div class="section-heading">
+          <span class="eyebrow">Service Breakdown</span>
+          <h2>Modular Feature Entitlements</h2>
+          <p class="section-intro">
+            Smaran allows each feature to be individually authorized. Services not included in your cryptographic license remain safely locked with non-intrusive UI indicators.
+          </p>
+        </div>
+
+        <div class="matrix-grid">
+          <article class="matrix-card">
+            <div class="matrix-header">
+              <span class="matrix-icon">⏰</span>
+              <div>
+                <h3>Reminders</h3>
+                <span class="matrix-tag tag-standard">Core Service</span>
+              </div>
+            </div>
+            <p class="matrix-desc">Calm, respectful desktop reminders designed to keep your day intentional and peaceful.</p>
+            <ul class="matrix-features">
+              <li>Natural language scheduling (e.g. "every weekday at 9am")</li>
+              <li>Fullscreen quiet hours, meeting focus & chime picker</li>
+              <li>System tray dock, rolling local backups & undo history</li>
+              <li>Minimal distraction, customizable colors & typography</li>
+            </ul>
+          </article>
+
+          <article class="matrix-card">
+            <div class="matrix-header">
+              <span class="matrix-icon">⚡</span>
+              <div>
+                <h3>Automations</h3>
+                <span class="matrix-tag tag-pro">Workstation Pro</span>
+              </div>
+            </div>
+            <p class="matrix-desc">A friendly, dependable routine runner for your PC without the complexity of Task Scheduler.</p>
+            <ul class="matrix-features">
+              <li>Chain up to 20 multi-step automated actions</li>
+              <li>Run shell commands, batch (.bat) and PowerShell (.ps1) scripts</li>
+              <li>Triggers: PC startup, user sign-in, lock/unlock, sleep/wake, charger</li>
+              <li>Countdown safe sleep, restart, and shutdown timers</li>
+            </ul>
+          </article>
+
+          <article class="matrix-card">
+            <div class="matrix-header">
+              <span class="matrix-icon">📁</span>
+              <div>
+                <h3>File Server</h3>
+                <span class="matrix-tag tag-pro">LAN & WebDAV</span>
+              </div>
+            </div>
+            <p class="matrix-desc">Instant zero-config local network file sharing with fine-grained access control.</p>
+            <ul class="matrix-features">
+              <li>Blazing-fast HTTP & WebDAV file server engine</li>
+              <li>Auto-generated credentials with secure password reset</li>
+              <li>Mobile-friendly browser file manager and upload station</li>
+              <li>Strict LAN isolation, rate-limiting & root path protection</li>
+            </ul>
+          </article>
+
+          <article class="matrix-card">
+            <div class="matrix-header">
+              <span class="matrix-icon">📡</span>
+              <div>
+                <h3>Remote Hub</h3>
+                <span class="matrix-tag tag-pro">Wireless Display & SRT</span>
+              </div>
+            </div>
+            <p class="matrix-desc">Ultra-low latency screen and window streaming for wireless secondary displays and broadcast studios.</p>
+            <ul class="matrix-features">
+              <li>H.264 60fps streaming powered by MediaMTX and FFmpeg</li>
+              <li>Hardware-accelerated encoding: AMD AMF, Intel QSV, NVIDIA NVENC</li>
+              <li>Broadcast-grade SRT output for OBS Studio, vMix & ATEM</li>
+              <li>Mobile web control portal with virtual trackpad and touch input</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <!-- Cryptography Architecture Section -->
+      <section class="portal-extra-section alt-bg">
+        <div class="section-heading">
+          <span class="eyebrow">Zero Cloud Dependency</span>
+          <h2>Cryptographic Security by Design</h2>
+          <p class="section-intro">
+            Your license belongs to you. No DRM servers to contact, no periodic activation checks, and zero telemetry.
+          </p>
+        </div>
+
+        <div class="crypto-grid">
+          <div class="crypto-box">
+            <div class="crypto-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </div>
+            <h4>Ed25519 Asymmetric Signatures</h4>
+            <p>Every license is signed using modern RFC 8032 Ed25519 elliptic-curve cryptography. The Smaran desktop client verifies the mathematical signature locally using its embedded public key.</p>
+          </div>
+
+          <div class="crypto-box">
+            <div class="crypto-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+            </div>
+            <h4>Steganographic LSB Encoding</h4>
+            <p>The entire cryptographic envelope is embedded directly into the least significant bits of the license card image pixels. A single PNG file contains your human-readable badge and machine-readable certificate.</p>
+          </div>
+
+          <div class="crypto-box">
+            <div class="crypto-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+            </div>
+            <h4>100% Offline & Private</h4>
+            <p>Smaran never connects to any server to validate or renew your license. You can use your software on fully air-gapped machines, workstations without internet, or secure studio networks.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ Section -->
+      <section class="portal-extra-section">
+        <div class="section-heading">
+          <span class="eyebrow">Answers</span>
+          <h2>Frequently Asked Questions</h2>
+        </div>
+
+        <div class="faq-grid">
+          <div class="faq-item">
+            <h4>How do I import this license card into Smaran?</h4>
+            <p>Download your generated <code>.png</code> card, open Smaran on your PC, click <strong>Settings</strong>, go to the <strong>License</strong> tab, and click <strong>Import License</strong>. Choose the downloaded image and your services activate instantly.</p>
+          </div>
+
+          <div class="faq-item">
+            <h4>Can I use one license across multiple personal PCs?</h4>
+            <p>Yes. Your license is cryptographically verified locally on any machine where Smaran is installed. You can store your license card image on a flash drive and import it on both your desktop and laptop.</p>
+          </div>
+
+          <div class="faq-item">
+            <h4>What happens if a service is turned off in my license?</h4>
+            <p>Services not granted in your license display a subtle locked indicator in their respective tabs. All licensed features continue to operate with full functionality and zero restrictions.</p>
+          </div>
+
+          <div class="faq-item">
+            <h4>How does Lifetime validity work?</h4>
+            <p>Selecting 100 Years creates a permanent lifetime license. It will remain valid through 2126 with no recurring renewals or expiration popups.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap">
+        <a class="brand" href="../">
+          <svg data-dots="smark" width="22" height="22"></svg>
+          <em>Smaran</em>
+        </a>
+        <span>Gentle reminders, on your schedule.</span>
+        <span>Version 3.5.7</span>
+        <a href="../#license">Apply for License</a>
+        <a href="../#download">Download</a>
+        <a href="https://github.com/SahajIVVIX-1/Smaran-Studio/releases" target="_blank" rel="noopener">Releases</a>
+        <span style="margin-left: auto">© 2026 SahajS</span>
+      </div>
+    </footer>
+
+    <script src="../dots.js"></script>
+    <script type="module" src="register.js"></script>
+  </body>
+</html>

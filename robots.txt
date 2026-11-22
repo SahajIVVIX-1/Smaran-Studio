@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /Smaran-Studio/Register/
+Disallow: /Smaran-Studio/register/
+Disallow: /Register/
+Disallow: /register/

@@ -1,0 +1,676 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Smaran: gentle reminders for Windows</title>
+    <meta
+      name="description"
+      content="Smaran is a calm reminder app for Windows. Type what to remember and when; it slides in as a notification card at the right time. Automations lock, sleep or shut down your PC and open apps, files and links."
+    />
+    <meta name="theme-color" content="#262624" />
+    <meta property="og:title" content="Smaran: gentle reminders, on your schedule" />
+    <meta
+      property="og:description"
+      content="Calm reminder cards and automations for Windows. Lives in the tray."
+    />
+    <meta property="og:image" content="icon.png" />
+    <link rel="icon" type="image/png" href="icon.png" />
+    <link
+      rel="preload"
+      href="fonts/source-serif-4-latin-wght-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script>
+      // Dark is Smaran's default; a choice made here is remembered on this device.
+      try {
+        const saved = localStorage.getItem('smaran-theme');
+        if (saved === 'light' || saved === 'dark') document.documentElement.dataset.theme = saved;
+      } catch {}
+    </script>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+
+    <header class="top">
+      <div class="wrap">
+        <a class="brand" href="#top" aria-label="Smaran, back to top">
+          <svg data-dots="smark,dance" data-hold="4" width="30" height="30"></svg>
+          <em>Smaran</em>
+        </a>
+        <nav class="nav" aria-label="Sections">
+          <a href="#features">Features</a>
+          <a href="#automations">Automations</a>
+          <a href="#how">How it works</a>
+          <a href="#license">License</a>
+          <a href="#download">Download</a>
+        </nav>
+        <button class="theme-toggle" type="button" aria-label="Switch between light and dark">
+          <svg
+            class="moon"
+            width="17"
+            height="17"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            aria-hidden="true"
+          >
+            <path d="M21 13A9 9 0 1 1 11 3a7 7 0 0 0 10 10z" />
+          </svg>
+          <svg
+            class="sun"
+            width="17"
+            height="17"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            aria-hidden="true"
+          >
+            <circle cx="12" cy="12" r="4" />
+            <path
+              d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"
+            />
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="hero" id="top">
+        <div class="wrap">
+          <div>
+            <svg
+              class="hero-logo"
+              data-dots="smark,dance,bell,check,heart,clock"
+              data-hold="2.4"
+            ></svg>
+            <h1>Smaran</h1>
+            <p class="tagline">Gentle reminders, on your schedule.</p>
+            <p class="lede">
+              Type what to remember and when, the way you’d say it. At the right moment Smaran
+              slides in a small, calm card: press <strong>Done</strong>, or
+              <strong>Snooze</strong> for later. It lives quietly in the Windows tray, and now it
+              can run your PC’s routines too.
+            </p>
+            <div class="cta">
+              <a
+                class="btn btn-primary"
+                href="https://github.com/SahajIVVIX-1/Smaran-Studio/releases/download/v3.5.7/Smaran-Studio-Setup-3.5.7.exe"
+              >
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M12 4v11M7 10l5 5 5-5M5 20h14" />
+                </svg>
+                Download Installer
+              </a>
+              <a
+                class="btn btn-secondary"
+                href="https://github.com/SahajIVVIX-1/Smaran-Studio/releases/download/v3.5.7/Smaran-Studio-3.5.7-portable.exe"
+              >
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M12 4v11M7 10l5 5 5-5M5 20h14" />
+                </svg>
+                Download Portable
+              </a>
+              <a class="btn btn-secondary" href="#features">See what it does</a>
+            </div>
+            <p class="fine">Version 3.5.7 for Windows 10 & 11 · Installer or portable standalone exe</p>
+          </div>
+
+          <div class="stage" aria-label="A Smaran notification, live">
+            <div id="demo-cards" style="display: contents"></div>
+            <p class="stage-label">Try the buttons. This is how reminders look on your screen.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="block alt">
+        <div class="wrap reveal">
+          <p class="eyebrow">Quick add</p>
+          <h2>Type it the way you’d <em>say</em> it.</h2>
+          <p class="intro">
+            Smaran reads plain sentences and turns them into a schedule, so adding a reminder takes
+            a few seconds.
+          </p>
+          <div class="examples">
+            <code>stretch every 45 min</code>
+            <code>call mom at 6pm</code>
+            <code>drink water every hour</code>
+          </div>
+        </div>
+      </section>
+
+      <section class="block" id="features">
+        <div class="wrap">
+          <div class="reveal">
+            <p class="eyebrow">Features</p>
+            <h2>Small on screen. <em>Thoughtful</em> underneath.</h2>
+            <p class="intro">Everything a reminder needs, and nothing that gets in your way.</p>
+          </div>
+          <div class="grid">
+            <article class="feature reveal">
+              <span class="icon"
+                ><svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  aria-hidden="true"
+                >
+                  <circle cx="12" cy="12" r="9" />
+                  <path d="M12 7v5l3 2" /></svg
+              ></span>
+              <h3>Any schedule</h3>
+              <p>
+                Once, every few minutes or hours, daily at several times, weekly on chosen days,
+                monthly (even “the last day”) or yearly. Repeating reminders can keep to set hours
+                and weekdays.
+              </p>
+            </article>
+            <article class="feature reveal">
+              <span class="icon"
+                ><svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  aria-hidden="true"
+                >
+                  <path d="M6 8a6 6 0 1 1 12 0c0 7 3 8 3 8H3s3-1 3-8" />
+                  <path d="M10.3 21a1.9 1.9 0 0 0 3.4 0" /></svg
+              ></span>
+              <h3>Cards that slide in</h3>
+              <p>
+                A small pill with the title that opens into the full card when you point at it, with
+                a soft colour light running round its border. Swipe it away, or right-click for
+                more.
+              </p>
+            </article>
+            <article class="feature reveal">
+              <span class="icon"
+                ><svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  aria-hidden="true"
+                >
+                  <path d="M12 3v4M12 17v4M3 12h4M17 12h4" /></svg
+              ></span>
+              <h3>Normal or important</h3>
+              <p>
+                Normal reminders hide themselves after a few seconds. Important ones stay until you
+                act and come through quiet hours and full-screen apps.
+              </p>
+            </article>
+            <article class="feature reveal">
+              <span class="icon"
+                ><svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  aria-hidden="true"
+                >
+                  <path d="M21 13A9 9 0 1 1 11 3a7 7 0 0 0 10 10z" /></svg
+              ></span>
+              <h3>Quiet hours and focus</h3>
+              <p>
+                Set quiet hours, and Smaran holds normal reminders while a full-screen app, game or
+                presentation is showing, then delivers them afterwards. Pause everything from the
+                tray.
+              </p>
+            </article>
+            <article class="feature reveal">
+              <span class="icon"
+                ><svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  aria-hidden="true"
+                >
+                  <path d="M4 6h16M4 12h10M4 18h13" /></svg
+              ></span>
+              <h3>Rotating lines</h3>
+              <p>
+                Give a reminder a list of lines (stretches, affirmations, tips) and it shows the
+                next one each time, in order or shuffled.
+              </p>
+            </article>
+            <article class="feature reveal">
+              <span class="icon"
+                ><svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  aria-hidden="true"
+                >
+                  <path d="M3 12a9 9 0 1 0 3-6.7L3 8" />
+                  <path d="M3 3v5h5" /></svg
+              ></span>
+              <h3>Snooze and follow-ups</h3>
+              <p>
+                Snooze for 5 minutes, 15 minutes, an hour or until tomorrow. If you don’t respond,
+                Smaran can remind you again every few minutes, up to the number of times you choose.
+              </p>
+            </article>
+            <article class="feature reveal">
+              <span class="icon" style="font-family: var(--font-serif); font-weight: 700">B</span>
+              <h3>Bold, italic, underline</h3>
+              <p>
+                Style words in a title or note with B, I, U and S (or Ctrl+B, Ctrl+I, Ctrl+U). The
+                style shows on the card and in your lists.
+              </p>
+            </article>
+            <article class="feature reveal">
+              <span class="icon"
+                ><svg width="22" height="22" data-dots="dance,check,bell" data-hold="2"></svg
+              ></span>
+              <h3>The Smaran dots</h3>
+              <p>
+                The logo is alive: three dots dance and form shapes in the title bar, the tray and
+                on each card. They ring for a reminder, tick on Done and sleep while paused.
+              </p>
+            </article>
+            <article class="feature reveal">
+              <span class="icon"
+                ><svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  aria-hidden="true"
+                >
+                  <circle cx="12" cy="12" r="9" />
+                  <path d="M8 12l3 3 5-6" /></svg
+              ></span>
+              <h3>History</h3>
+              <p>
+                What happened to each reminder (done, snoozed, missed, skipped) and every automation
+                run, with a weekly summary. Missed while the PC was off? Smaran tells you once,
+                gently.
+              </p>
+            </article>
+            <article class="feature reveal">
+              <span class="icon"
+                ><svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  aria-hidden="true"
+                >
+                  <path d="M12 3a9 9 0 1 0 9 9" />
+                  <path d="M12 7v5h5" /></svg
+              ></span>
+              <h3>Your look</h3>
+              <p>
+                Light, dark or follow Windows. Pick the corner and screen, three card sizes, a chime
+                per reminder, your own fonts, and a colour for each reminder.
+              </p>
+              <div class="swatches" aria-hidden="true">
+                <span style="background: var(--c-clay)"></span
+                ><span style="background: var(--c-amber)"></span
+                ><span style="background: var(--c-olive)"></span
+                ><span style="background: var(--c-sage)"></span
+                ><span style="background: var(--c-sky)"></span
+                ><span style="background: var(--c-iris)"></span
+                ><span style="background: var(--c-rose)"></span
+                ><span style="background: var(--c-slate)"></span>
+              </div>
+            </article>
+            <article class="feature reveal">
+              <span class="icon"
+                ><svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  aria-hidden="true"
+                >
+                  <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z" />
+                  <path d="M14 3v5h5" /></svg
+              ></span>
+              <h3>Backups built in</h3>
+              <p>
+                Every change keeps rolling backups. Back up to a file, restore it, or add reminders
+                from another file, including older Smaran versions.
+              </p>
+            </article>
+            <article class="feature reveal">
+              <span class="icon"
+                ><svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  aria-hidden="true"
+                >
+                  <path d="M12 19V5M5 12l7-7 7 7" /></svg
+              ></span>
+              <h3>Stays in the tray</h3>
+              <p>
+                Starts quietly when you sign in. Closing the window keeps reminders running; the
+                tray shows what’s next and lets you pause or show one now.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="block alt" id="automations">
+        <div class="wrap">
+          <div class="reveal">
+            <p class="eyebrow">New in 2.14</p>
+            <h2><em>Automations.</em> Your PC’s routines, done for you.</h2>
+            <p class="intro">
+              Like a friendly Task Scheduler: pick when, pick what, and Smaran does it. Chain up to
+              20 steps, with a wait before any of them.
+            </p>
+          </div>
+          <div class="auto">
+            <div class="lists">
+              <div class="list reveal">
+                <h3>When</h3>
+                <ul>
+                  <li>
+                    At a date and time, or on a repeat
+                    <span class="muted"
+                      >(once, every N minutes, daily, weekly, monthly, yearly)</span
+                    >
+                  </li>
+                  <li>
+                    When the computer starts, when you sign in, or when Smaran opens
+                    <span class="muted">(with an optional wait)</span>
+                  </li>
+                  <li>When you lock or unlock the PC</li>
+                  <li>When it goes to sleep or wakes up</li>
+                  <li>When the charger is plugged in or unplugged</li>
+                  <li>When you’ve been away for some minutes, or come back</li>
+                </ul>
+              </div>
+              <div class="list reveal">
+                <h3>Do</h3>
+                <ul>
+                  <li>Lock, sign out, sleep, hibernate, shut down or restart</li>
+                  <li>Open any app, with arguments if you like</li>
+                  <li>Open any file: a PDF, a document, a folder</li>
+                  <li>
+                    Run a script
+                    <span class="muted">(.bat, .cmd or .ps1, with or without a window)</span>
+                  </li>
+                  <li>
+                    Open a link in your default browser, or the one you choose
+                    <span class="muted"
+                      >(Chrome, Edge, Firefox… found for you, with a private-window option)</span
+                    >
+                  </li>
+                </ul>
+              </div>
+              <div class="list reveal">
+                <h3>Safe by default</h3>
+                <ul>
+                  <li>
+                    Before signing out, sleeping or shutting down, a card counts down 30 seconds
+                    with <strong>Cancel</strong> and <strong>Run Now</strong>
+                  </li>
+                  <li>A time missed while the PC was asleep or off is skipped, never run late</li>
+                  <li>
+                    Every run is in History: ran, failed (with the reason), cancelled or skipped
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="auto-demo reveal">
+              <div class="stage" aria-label="An automation counting down, live">
+                <div class="recipe">
+                  <div class="name">Bedtime</div>
+                  <div class="sum">Daily at 23:30 → Shut down</div>
+                </div>
+                <div id="demo-countdown" style="display: contents"></div>
+                <p class="stage-label">The safety card. Press Cancel and nothing happens.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="block" id="how">
+        <div class="wrap">
+          <div class="reveal">
+            <p class="eyebrow">How it works</p>
+            <h2>Three steps, then it <em>just runs</em>.</h2>
+          </div>
+          <div class="steps">
+            <div class="step reveal">
+              <h3>Install</h3>
+              <p>
+                Run Smaran Setup. It installs straight away and opens Smaran when it’s done. Or use
+                the portable exe from any folder.
+              </p>
+            </div>
+            <div class="step reveal">
+              <h3>Add what matters</h3>
+              <p>
+                Type a reminder, or press Ctrl+N. Two gentle examples are ready for you to edit or
+                delete.
+              </p>
+            </div>
+            <div class="step reveal">
+              <h3>Get on with your day</h3>
+              <p>
+                Close the window. Smaran waits in the tray and brings each reminder to you at the
+                right time.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="block" id="license">
+        <div class="wrap">
+          <div class="reveal">
+            <p class="eyebrow">Licensing & Editions</p>
+            <h2>Simple, transparent <em>licensing</em>.</h2>
+            <p class="intro">
+              Smaran is designed to be calm, distraction-free, and respectful. Use it freely for everyday personal reminders, or configure an authentic cryptographic license card to unlock advanced workstation features.
+            </p>
+          </div>
+
+          <!-- License Portal Transfer Banner -->
+          <div class="panel reveal" style="margin-top: 32px; padding: 32px; border-radius: 20px; background: var(--surface); border: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px; position: relative; overflow: hidden; box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.45);">
+            <div style="position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--accent), transparent); opacity: 0.8;"></div>
+            <div style="max-width: 620px;">
+              <span style="display: inline-block; font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); background: var(--accent-soft); padding: 4px 10px; border-radius: 6px; margin-bottom: 12px;">Cryptographic License Portal</span>
+              <h3 style="font-family: var(--font-serif); font-size: 26px; color: var(--ink); margin: 0 0 8px; font-weight: 500;">Configure & Generate Your License Card</h3>
+              <p style="font-size: 14.5px; color: var(--muted); margin: 0; line-height: 1.55;">
+                Select your authorized services (Reminders, Automations, File Server, Remote Hub), choose duration up to 100 years lifetime, and generate an authentic Ed25519-signed license card in our dedicated portal.
+              </p>
+            </div>
+            <div>
+              <a class="btn btn-primary" href="Register/" style="padding: 14px 28px; font-size: 15px; font-weight: 600; display: inline-flex; align-items: center; gap: 10px; box-shadow: 0 4px 16px var(--accent-soft); white-space: nowrap;">
+                <span>Open License Portal</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </a>
+            </div>
+          </div>
+
+          <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 24px; margin-top: 40px;">
+            <article class="feature reveal" style="border: 1px solid var(--line); border-radius: 18px; padding: 28px; background: var(--surface);">
+              <span class="icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+              </span>
+              <h3>Standard Edition</h3>
+              <p class="tagline" style="font-size: 13.5px; color: var(--accent); margin-top: 4px; font-weight: 600;">Free & Open for Personal Use</p>
+              <ul style="margin: 16px 0 24px; padding-left: 18px; font-size: 14px; line-height: 1.8; color: var(--ink);">
+                <li>Unlimited local reminders and natural language schedules</li>
+                <li>Quiet hours, fullscreen focus mode & chime customization</li>
+                <li>Full reminder history and rolling local backups</li>
+                <li>Windows tray quick access & live dots animation</li>
+              </ul>
+              <a class="btn btn-secondary" href="#download" style="width: 100%; justify-content: center;">Download Free v3.5.7</a>
+            </article>
+
+            <article class="feature reveal" style="border: 1px solid var(--accent); border-radius: 18px; padding: 28px; background: var(--surface); box-shadow: 0 0 24px var(--accent-soft); position: relative;">
+              <span style="position: absolute; top: 16px; right: 16px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; padding: 4px 10px; border-radius: 100px; background: var(--accent); color: var(--on-accent);">Recommended</span>
+              <span class="icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              </span>
+              <h3>Pro & Workstation License</h3>
+              <p class="tagline" style="font-size: 13.5px; color: var(--accent); margin-top: 4px; font-weight: 600;">1 Year, 5 Years or Lifetime</p>
+              <ul style="margin: 16px 0 24px; padding-left: 18px; font-size: 14px; line-height: 1.8; color: var(--ink);">
+                <li><strong>Remote Hub:</strong> Ultra-low latency H.264 screen & window streaming, SRT output for OBS/vMix, mobile web portal</li>
+                <li><strong>File Server:</strong> Secure LAN file sharing with time-based credentials and access control</li>
+                <li><strong>Automations:</strong> Multi-step actions, custom scripts (.bat, .ps1), app launches, safe countdowns</li>
+                <li><strong>Cryptographic Card:</strong> Offline Ed25519 digital signature embedded in PNG</li>
+              </ul>
+              <a class="btn btn-primary" href="Register/" style="width: 100%; justify-content: center;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v16m8-8H4"/></svg>
+                Apply for License Now →
+              </a>
+            </article>
+
+            <article class="feature reveal" style="border: 1px solid var(--line); border-radius: 18px; padding: 28px; background: var(--surface);">
+              <span class="icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+              </span>
+              <h3>Enterprise & Studio</h3>
+              <p class="tagline" style="font-size: 13.5px; color: var(--muted); margin-top: 4px; font-weight: 600;">Multi-seat & Broadcast Setups</p>
+              <ul style="margin: 16px 0 24px; padding-left: 18px; font-size: 14px; line-height: 1.8; color: var(--ink);">
+                <li>Custom multi-workstation deployments & silent deployment</li>
+                <li>Centralized license issuance with custom organization keys</li>
+                <li>Dedicated studio streaming and SRT broadcast integration</li>
+                <li>Priority updates and architectural support</li>
+              </ul>
+              <a class="btn btn-secondary" href="https://github.com/SahajIVVIX-1/Smaran-Studio/issues" target="_blank" rel="noopener" style="width: 100%; justify-content: center;">Contact for Enterprise</a>
+            </article>
+          </div>
+
+          <div class="panel" style="margin-top: 32px; padding: 20px 24px; border-radius: 14px; background: var(--raised); border: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
+            <div>
+              <strong style="color: var(--ink); font-size: 15px;">How to activate your license in Smaran:</strong>
+              <p style="margin: 4px 0 0; color: var(--muted); font-size: 13.5px;">Download your license card image (.png) from the License Portal, then open <strong>Smaran → Settings → License</strong> and click <em>Import License</em>.</p>
+            </div>
+            <a class="btn btn-secondary" href="Register/" style="white-space: nowrap;">Open License Portal →</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="block alt download" id="download">
+        <div class="wrap reveal">
+          <p class="eyebrow">Download Smaran 3.5.7</p>
+          <h2>Get <em>Smaran</em> for Windows.</h2>
+          <p class="intro">One installer, or a portable exe that keeps its data beside it.</p>
+          <div class="cta" style="display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;">
+            <a
+              class="btn btn-primary"
+              href="https://github.com/SahajIVVIX-1/Smaran-Studio/releases/download/v3.5.7/Smaran-Studio-Setup-3.5.7.exe"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14" /></svg>
+              Download Installer (v3.5.7)
+            </a>
+            <a
+              class="btn btn-secondary"
+              href="https://github.com/SahajIVVIX-1/Smaran-Studio/releases/download/v3.5.7/Smaran-Studio-3.5.7-portable.exe"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14" /></svg>
+              Download Portable (v3.5.7)
+            </a>
+          </div>
+          <div class="dl-notes">
+            <div>
+              <strong>Installer (.exe)</strong>
+              Installs for your user (or Program Files when run as admin), adds Start menu and desktop shortcuts, and updates over earlier versions keeping your reminders and settings.
+              <p style="margin-top: 10px"><a style="color: var(--accent); font-weight: 600; text-decoration: none;" href="https://github.com/SahajIVVIX-1/Smaran-Studio/releases/download/v3.5.7/Smaran-Studio-Setup-3.5.7.exe">Download Smaran-Studio-Setup-3.5.7.exe ↓</a></p>
+            </div>
+            <div>
+              <strong>Portable (.exe)</strong>
+              Run it from any folder or USB stick. Your data goes in <code>SmaranData\</code> next to the exe when that folder is writable. Zero installation required.
+              <p style="margin-top: 10px"><a style="color: var(--accent); font-weight: 600; text-decoration: none;" href="https://github.com/SahajIVVIX-1/Smaran-Studio/releases/download/v3.5.7/Smaran-Studio-3.5.7-portable.exe">Download Smaran-Studio-3.5.7-portable.exe ↓</a></p>
+            </div>
+            <div>
+              <strong>First run</strong>
+              The builds aren’t code-signed yet, so Windows SmartScreen may warn the first time.
+              Choose “More info”, then “Run anyway”.
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap">
+        <a class="brand" href="#top"
+          ><svg data-dots="smark" width="22" height="22"></svg><em>Smaran</em></a
+        >
+        <span>Gentle reminders, on your schedule.</span>
+        <span>Version 3.5.7</span>
+        <a href="#license">Apply for License</a>
+        <a href="Register/">License Portal</a>
+        <a href="https://github.com/SahajIVVIX-1/Smaran-Studio/releases">Releases</a>
+        <span style="margin-left: auto">© 2026 SahajS</span>
+      </div>
+    </footer>
+
+    <script src="dots.js"></script>
+    <script src="site.js"></script>
+  </body>
+</html>
